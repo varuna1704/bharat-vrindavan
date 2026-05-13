@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FDF8F0;
+  --bg-card: #FFFCF7;
+  --bg-nav: linear-gradient(135deg, #1E0B3B, #3B1224);
+  --text-primary: #1a0a2e;
+  --text-muted: #7A6A5A;
+  --border: #E8D8C0;
+  --gold: #C8920A;
+  --gold-light: #FAC775;
+  --accent-green: #1D9E75;
+  --accent-red: #D85A30;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at top left, rgba(250, 199, 117, 0.34), transparent 30rem),
+    linear-gradient(180deg, #fffaf2, var(--bg));
+  font-family: "Cormorant Garamond", serif;
+  font-size: 18px;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.font-display {
+  letter-spacing: 0;
+}
+
+.mandala-spin {
+  animation: spinMandala 20s linear infinite;
+}
+
+.hero-fade-up {
+  animation: fadeUp 0.6s ease both;
+}
+
+.story-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.18rem;
+  line-height: 1.72;
+}
+
+.scrollbar-soft {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 146, 10, 0.55) transparent;
+}
+
+@keyframes spinMandala {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+}
