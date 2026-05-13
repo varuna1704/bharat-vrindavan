@@ -5,7 +5,15 @@ import { fadeUp, staggerContainer } from '../lib/motion'
 
 export default function FestivalsPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <motion.div
+      id="main-content"
+      role="main"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mx-auto max-w-7xl px-4 py-10 sm:px-6"
+    >
       <motion.div variants={fadeUp} initial="hidden" animate="show">
         <p className="font-nav text-sm uppercase tracking-[0.2em] text-heritage-muted">Festival mapping</p>
         <h1 className="font-display text-4xl">What India Wears to Celebrate</h1>
@@ -15,6 +23,6 @@ export default function FestivalsPage() {
           <FestivalCard key={festival.name} festival={festival} />
         ))}
       </motion.div>
-    </main>
+    </motion.div>
   )
 }

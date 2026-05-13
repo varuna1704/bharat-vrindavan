@@ -10,7 +10,15 @@ export default function StoriesPage() {
   const setSelectedItem = useHeritageStore((state) => state.setSelectedItem)
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <motion.div
+      id="main-content"
+      role="main"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mx-auto max-w-5xl px-4 py-10 sm:px-6"
+    >
       <motion.div variants={fadeUp} initial="hidden" animate="show">
         <p className="font-nav text-sm uppercase tracking-[0.2em] text-heritage-muted">Stories archive</p>
         <h1 className="font-display text-4xl">Every Object Has a Memory</h1>
@@ -46,6 +54,6 @@ export default function StoriesPage() {
           </motion.article>
         ))}
       </motion.div>
-    </main>
+    </motion.div>
   )
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { BookOpen, ExternalLink } from 'lucide-react'
@@ -5,6 +6,7 @@ import { useHeritageStore } from '../store/useHeritageStore'
 import { cardReveal } from '../lib/motion'
 
 export default function OutfitCard({ item }) {
+  const [imageLoading, setImageLoading] = useState(Boolean(item.imageUrl))
   const setSelectedItem = useHeritageStore((state) => state.setSelectedItem)
   const [from, to] = item.color
 
@@ -32,10 +34,22 @@ export default function OutfitCard({ item }) {
         aria-label={`Read story for ${item.name}`}
       >
         <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden" style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}>
+          {item.imageUrl && imageLoading && <div className="absolute inset-0 animate-pulse bg-white/20" aria-hidden="true" />}
+          {item.imageUrl && (
+            <motion.img
+              src={item.imageUrl}
+              alt={`${item.name} from ${item.state}`}
+              onLoad={() => setImageLoading(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: imageLoading ? 0 : 1 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
           <span className="absolute right-3 top-3 rounded-full bg-white/88 px-3 py-1 font-nav text-xs text-[#1a0a2e]">
             {item.persons[0]}
           </span>
-          <span className="text-6xl drop-shadow-xl" role="img" aria-label={`${item.name} from ${item.state}`}>
+          <span className={`text-6xl drop-shadow-xl ${item.imageUrl ? 'relative z-10' : ''}`} role="img" aria-label={`${item.name} from ${item.state}`}>
             {item.emoji}
           </span>
           <span className="absolute bottom-3 left-3 rounded-full bg-black/35 px-3 py-1 font-nav text-xs text-white backdrop-blur">

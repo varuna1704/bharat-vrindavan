@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bharat-vrindavan.vercel.app/sitemap.xml
