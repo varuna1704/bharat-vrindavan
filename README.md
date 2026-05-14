@@ -21,6 +21,36 @@ The app presents heritage objects through animated gallery cards, story modals, 
 - Zustand-powered global filter and modal state
 - Tailwind CSS design system with warm heritage colors and custom typography
 
+## Screenshots
+
+### Explore Gallery
+
+![Explore gallery page](public/screenshots/home.png)
+
+### State-Wise Browse
+
+![State-wise browse page](public/screenshots/states.png)
+
+### Stories Archive
+
+![Stories archive page](public/screenshots/stories.png)
+
+### Festivals
+
+![Festival stories page](public/screenshots/festivals.png)
+
+### About
+
+![About page](public/screenshots/about.png)
+
+### Item Detail
+
+![Item detail page with 3D viewer](public/screenshots/item-detail.png)
+
+### 404 Page
+
+![Custom 404 page](public/screenshots/not-found.png)
+
 ## Tech Stack
 
 - React 18
@@ -67,6 +97,7 @@ src/
   store/           Zustand global state
   styles/          Tailwind globals and design tokens
 public/
+  screenshots/      Page screenshots used in this README
   manifest.json    PWA manifest
   robots.txt       Search crawler rules
   sitemap.xml      Sitemap for deployment
