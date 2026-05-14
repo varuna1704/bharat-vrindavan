@@ -27,7 +27,6 @@ export default function ItemDetailPage() {
   const item = allItems.find((entry) => String(entry.id) === id)
 
   useEffect(() => {
-    setShowHint(true)
     const timeout = window.setTimeout(() => setShowHint(false), 4000)
     return () => window.clearTimeout(timeout)
   }, [id])
@@ -75,6 +74,7 @@ export default function ItemDetailPage() {
             <ErrorBoundary>
               <Canvas
                 camera={{ position: [0, 0, 4.2], fov: 45 }}
+                role="img"
                 aria-label={`${item.name} — 3D interactive cultural artifact from India`}
               >
                 <ambientLight intensity={0.85} />
