@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import MandalaDecor from './MandalaDecor'
@@ -7,13 +7,14 @@ import { useHeritageStore } from '../store/useHeritageStore'
 export default function StoryModal() {
   const { selectedItem, setSelectedItem } = useHeritageStore()
   const closeButtonRef = useRef(null)
+  const closeModal = useCallback(() => setSelectedItem(null), [setSelectedItem])
 
   useEffect(() => {
     if (!selectedItem) return undefined
     closeButtonRef.current?.focus()
 
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedItem(null)
+      if (event.key === 'Escape') closeModal()
       if (event.key === 'Tab') {
         const focusable = document.querySelectorAll('[data-story-modal] button, [data-story-modal] a')
         if (!focusable.length) return
@@ -29,23 +30,28 @@ export default function StoryModal() {
       }
     }
 
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+
     document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
     window.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
       window.removeEventListener('keydown', onKeyDown)
     }
-  }, [selectedItem, setSelectedItem])
+  }, [closeModal, selectedItem, setSelectedItem])
 
   return (
     <AnimatePresence>
       {selectedItem && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#120718]/70 p-4 backdrop-blur-[10px]"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#120718]/70 px-4 py-6 backdrop-blur-[10px] sm:items-center sm:py-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onMouseDown={() => setSelectedItem(null)}
+          onMouseDown={closeModal}
         >
           <motion.section
             data-story-modal
@@ -57,7 +63,7 @@ export default function StoryModal() {
             exit={{ scale: 0.94, opacity: 0, y: 12 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="max-h-[88vh] w-full max-w-3xl overflow-auto bg-heritage-card shadow-2xl"
+            className="my-auto w-full max-w-3xl overflow-hidden bg-heritage-card shadow-2xl"
           >
             <div
               className="relative overflow-hidden p-6 text-white"
@@ -67,8 +73,17 @@ export default function StoryModal() {
               <button
                 ref={closeButtonRef}
                 type="button"
-                onClick={() => setSelectedItem(null)}
-                className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25"
+                onMouseDown={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  closeModal()
+                }}
+                onClick={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  closeModal()
+                }}
+                className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-white"
                 aria-label="Close story"
               >
                 <X size={18} aria-hidden="true" />
@@ -83,7 +98,7 @@ export default function StoryModal() {
                 </h2>
               </div>
             </div>
-            <div className="p-6">
+            <div className="max-h-[min(52vh,28rem)] overflow-y-auto p-6">
               <p className="story-text text-heritage-text">{selectedItem.story.body}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {selectedItem.story.meta.map((meta) => (

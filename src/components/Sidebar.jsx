@@ -28,12 +28,12 @@ export default function Sidebar() {
   )
 
   return (
-    <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-7rem)]">
+    <aside className="lg:sticky lg:top-24 lg:self-start">
       <motion.div
         initial={{ opacity: 0, x: -18 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.12 }}
-        className="border border-heritage-border bg-heritage-card p-4 shadow-heritage"
+        className="scrollbar-soft max-h-none overflow-visible border border-heritage-border bg-heritage-card p-4 shadow-heritage lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"
       >
         <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="font-display text-xl">Categories</h2>
